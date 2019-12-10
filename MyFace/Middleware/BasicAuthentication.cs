@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Castle.Windsor;
+using MyFace.DataAccess;
 using MyFace.Helpers;
 
 namespace MyFace.Middleware
@@ -18,6 +20,9 @@ namespace MyFace.Middleware
             if (userNameAndPassword != null)
             {
                 //TODO get password from the database.
+                var windsorContainer = filterContext.HttpContext.Items["WindsorContainer"] as IWindsorContainer;
+                var userRepository = windsorContainer?.Resolve<IUserRepository>();
+
                 const string thePassword = "secret";
                 if (userNameAndPassword.Password == thePassword) return;
             }

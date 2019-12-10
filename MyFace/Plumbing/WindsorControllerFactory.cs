@@ -16,7 +16,9 @@ namespace MyFace.Plumbing
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {            
+        {
+            requestContext.HttpContext.Items["WindsorContainer"] = container;
+
 			if (controllerType != null && container.Kernel.HasComponent(controllerType))
 				return (IController)container.Resolve(controllerType);
 
