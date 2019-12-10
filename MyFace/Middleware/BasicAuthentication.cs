@@ -1,8 +1,10 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MyFace.DataAccess;
 using MyFace.Helpers;
 
 namespace MyFace.Middleware
@@ -18,6 +20,8 @@ namespace MyFace.Middleware
             if (userNameAndPassword != null)
             {
                 //TODO get password from the database.
+                var userRepository = filterContext.Resolve<IUserRepository>();
+
                 const string thePassword = "secret";
                 if (userNameAndPassword.Password == thePassword) return;
             }

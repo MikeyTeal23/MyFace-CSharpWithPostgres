@@ -3,6 +3,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Castle.Windsor;
+using MyFace.Helpers;
 
 namespace MyFace.Plumbing
 {
@@ -16,7 +17,9 @@ namespace MyFace.Plumbing
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
-        {            
+        {
+            requestContext.SaveContainerInContext(container);
+
 			if (controllerType != null && container.Kernel.HasComponent(controllerType))
 				return (IController)container.Resolve(controllerType);
 
